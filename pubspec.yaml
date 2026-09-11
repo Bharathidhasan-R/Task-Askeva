@@ -1,4 +1,4 @@
-name: bharathi_task
+name: task_askeva
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -31,95 +31,32 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
+  # Networking & API
   dio: ^5.3.0
-  iconly: ^1.0.1
-  intl: ^0.20.0
-  skeletonizer: ^1.1.1
-  flutter_dotenv: ^5.2.1
-  image_picker: ^1.2.0
-  image_cropper: ^11.0.0
-  flutter_vector_icons: ^2.0.0
-  file_picker: ^8.1.6
 
-
-  # Firebase
-  firebase_core: ^3.6.0
-  firebase_analytics: ^11.3.0
-  firebase_messaging: ^15.1.0
-  firebase_crashlytics: ^4.1.0
-
-  google_sign_in: ^7.0.0
-
-
-  # Payments
-  razorpay_flutter: ^1.4.0
-  #  flutter_stripe: ^11.5.0
-
-  # Notifications
-  awesome_notifications: ^0.10.1
-
-  # State Management
+  # State Management & Utilities
   get: ^4.6.6
+  intl: ^0.20.0
+  url_launcher: ^6.2.2
 
-  # UI
+  # UI & Styling
   flutter_screenutil: ^5.9.0
   google_fonts: ^6.1.0
-  hugeicons: ^1.0.2
-  pinput: ^5.0.2
-  sms_autofill: ^2.4.1
-  flutter_sliding_toast: ^1.4.3
-  country_code_picker: ^3.4.1
-  timeago: ^3.7.1
 
-
-  # Storage
-  hive_flutter: ^1.1.0
-  flutter_secure_storage: ^9.2.4
-
-  # Network & Connectivity
-  connectivity_plus: ^5.0.2
-  http: ^1.1.2
+  # Device Hardware & Permissions
   geolocator: ^14.0.1
-  geocoding: ^4.0.0
-
-  # Permissions
+  image_picker: ^1.2.0
   permission_handler: ^12.0.1
 
-  # Updates
-  flutter_launcher_icons: ^0.14.4
-  flutter_upgrade_version: ^1.1.8
-
-  # Utilities
-  url_launcher: ^6.2.2
-  path_provider: ^2.1.2
-  device_info_plus: ^9.1.1
-  package_info_plus: ^4.2.0
-
-  #searchbar
-  standard_searchbar: ^2.1.1
-  #bottom sheet
-  bottom_sheet: ^4.0.4
-  #slider
-  carousel_slider: ^5.1.1
-  webview_flutter: ^4.13.0
-  #dotted border
-  dotted_border: ^3.1.0
-  material_design_icons_flutter: ^7.0.7296
+  # Local & Secure Storage
+  hive_flutter: ^1.1.0
+  flutter_secure_storage: ^9.2.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the

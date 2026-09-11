@@ -266,48 +266,94 @@ class TaskItem {
       };
 
   factory TaskItem.fromJson(Map<String, dynamic> json) {
+    final customer = json['customer'] is Map
+        ? json['customer']
+        : (json['customers'] is Map ? json['customers'] : null);
+
+    String customerAddr = json['customerAddress']?.toString() ??
+        json['customer_address']?.toString() ??
+        (customer != null
+            ? "${customer['address'] ?? ''}${customer['city'] != null && customer['city'].toString().isNotEmpty ? ', ${customer['city']}' : ''}"
+            : '');
+
     return TaskItem(
-      id: json['id'] ?? '',
-      taskNumber: json['taskNumber'] ?? '',
-      title: json['title'] ?? '',
-      serviceCategory: json['serviceCategory'] ?? 'General Service',
-      description: json['description'] ?? '',
-      priority: TaskPriority.fromString(json['priority']),
-      status: TaskStatus.fromString(json['status']),
+      id: json['id']?.toString() ?? '',
+      taskNumber: json['taskNumber']?.toString() ??
+          json['task_number']?.toString() ??
+          'TSK-${json['id']?.toString().substring(0, json['id']?.toString().length.clamp(0, 4) ?? 0) ?? '001'}',
+      title: json['title']?.toString() ?? '',
+      serviceCategory: json['serviceCategory']?.toString() ??
+          json['service_category']?.toString() ??
+          json['category']?.toString() ??
+          'General Service',
+      description: json['description']?.toString() ?? '',
+      priority: TaskPriority.fromString(json['priority']?.toString()),
+      status: TaskStatus.fromString(json['status']?.toString()),
       scheduledDateTime: json['scheduledDateTime'] != null
-          ? DateTime.tryParse(json['scheduledDateTime']) ?? DateTime.now()
-          : DateTime.now(),
-      customerName: json['customerName'] ?? '',
-      customerPhone: json['customerPhone'] ?? '',
-      customerAddress: json['customerAddress'] ?? '',
-      customerLatitude: (json['customerLatitude'] as num?)?.toDouble() ?? 11.0168,
-      customerLongitude: (json['customerLongitude'] as num?)?.toDouble() ?? 76.9558,
+          ? DateTime.tryParse(json['scheduledDateTime'].toString()) ?? DateTime.now()
+          : (json['scheduled_at'] != null
+              ? DateTime.tryParse(json['scheduled_at'].toString()) ?? DateTime.now()
+              : DateTime.now()),
+      customerName: json['customerName']?.toString() ??
+          json['customer_name']?.toString() ??
+          customer?['name']?.toString() ??
+          '',
+      customerPhone: json['customerPhone']?.toString() ??
+          json['customer_phone']?.toString() ??
+          customer?['phone']?.toString() ??
+          '',
+      customerAddress: customerAddr,
+      customerLatitude: (json['customerLatitude'] as num?)?.toDouble() ??
+          (json['customer_latitude'] as num?)?.toDouble() ??
+          (customer?['latitude'] as num?)?.toDouble() ??
+          11.0168,
+      customerLongitude: (json['customerLongitude'] as num?)?.toDouble() ??
+          (json['customer_longitude'] as num?)?.toDouble() ??
+          (customer?['longitude'] as num?)?.toDouble() ??
+          76.9558,
       startedAt: json['startedAt'] != null
-          ? DateTime.tryParse(json['startedAt'])
-          : null,
+          ? DateTime.tryParse(json['startedAt'].toString())
+          : (json['started_at'] != null
+              ? DateTime.tryParse(json['started_at'].toString())
+              : null),
       completedAt: json['completedAt'] != null
-          ? DateTime.tryParse(json['completedAt'])
-          : null,
-      startLatitude: (json['startLatitude'] as num?)?.toDouble(),
-      startLongitude: (json['startLongitude'] as num?)?.toDouble(),
-      completeLatitude: (json['completeLatitude'] as num?)?.toDouble(),
-      completeLongitude: (json['completeLongitude'] as num?)?.toDouble(),
+          ? DateTime.tryParse(json['completedAt'].toString())
+          : (json['completed_at'] != null
+              ? DateTime.tryParse(json['completed_at'].toString())
+              : null),
+      startLatitude: (json['startLatitude'] as num?)?.toDouble() ??
+          (json['start_latitude'] as num?)?.toDouble(),
+      startLongitude: (json['startLongitude'] as num?)?.toDouble() ??
+          (json['start_longitude'] as num?)?.toDouble(),
+      completeLatitude: (json['completeLatitude'] as num?)?.toDouble() ??
+          (json['completion_latitude'] as num?)?.toDouble() ??
+          (json['complete_latitude'] as num?)?.toDouble(),
+      completeLongitude: (json['completeLongitude'] as num?)?.toDouble() ??
+          (json['completion_longitude'] as num?)?.toDouble() ??
+          (json['complete_longitude'] as num?)?.toDouble(),
       notes: (json['notes'] as List<dynamic>?)
-              ?.map((e) => TaskNote.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => TaskNote.fromJson(Map<String, dynamic>.from(e as Map)))
               .toList() ??
           [],
       evidenceImages: (json['evidenceImages'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
+          (json['images'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
           [],
-      customerConfirmationRemark: json['customerConfirmationRemark'],
-      isCustomerConfirmed: json['isCustomerConfirmed'] ?? false,
+      customerConfirmationRemark: json['customerConfirmationRemark']?.toString() ??
+          json['customer_confirmation_note']?.toString() ??
+          json['customer_confirmation_remark']?.toString(),
+      isCustomerConfirmed: json['isCustomerConfirmed'] == true ||
+          json['customer_confirmed'] == true ||
+          json['is_customer_confirmed'] == true,
       syncState: SyncState.values.firstWhere(
         (s) => s.name == json['syncState'],
         orElse: () => SyncState.synced,
       ),
       lastModified: json['lastModified'] != null
-          ? DateTime.tryParse(json['lastModified']) ?? DateTime.now()
+          ? DateTime.tryParse(json['lastModified'].toString()) ?? DateTime.now()
           : DateTime.now(),
     );
   }
